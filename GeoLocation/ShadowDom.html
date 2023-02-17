@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow Dom</title>
+</head>
+<body>
+    <script>
+        //firstname & lastname
+        class personName extends HTMLElement{
+            constructor(){
+                super();
+                let shadowE1 = this.attachShadow({mode:'closed'});
+                let elementRoot = document.createElement('div');
+
+                let fNamLabelE1= document.createElement('label');
+                fNamLabelE1.innerText = 'First Name: ';
+
+                let lNamLabelE1= document.createElement('label');
+                lNamLabelE1.innerText= 'Last Name: ';
+                
+                let fNameE1=document.createElement('input');
+                let lNameE1=document.createElement('input');
+        
+                elementRoot.append(fNamLabelE1);
+                elementRoot.append(fNameE1);
+                elementRoot.append(document.createElement('br'));
+                elementRoot.append(lNamLabelE1);
+                elementRoot.append(lNameE1);
+
+                let spanoutput = document.createElement('span');
+                elementRoot.append(document.createElement('br'));
+                elementRoot.append(spanoutput);
+            
+            this.nameE1change = () => {
+                spanoutput.innerHTML= `Hello ${fNameE1.value} ${lNameE1.value}!`;
+            }
+            fNameE1.addEventListener('change',this.nameE1change);
+            lNameE1.addEventListener('change',this.nameE1change);
+
+            shadowE1.append(elementRoot);
+            }
+        } 
+       customElements.define('person-name',personName);
+    </script>
+
+    <person-name> </person-name>
+</body>
+</html>
